@@ -8,9 +8,8 @@ public class Aplicacion {
         String op;
         boolean toContinue = true;
         //Se implementará una interfaz gráfica posteriormente
-        new Menu();
+        //new Menu();
         //Vista en la Ventana de Comandos
-        /*
         do {
             mostrarMenu();
             System.out.print("Introduzca una opcion: ");
@@ -22,6 +21,15 @@ public class Aplicacion {
                     op = sc.next();
                     switch(op) {
                         case "1":
+                            Random rand = new Random();
+                            Nacion nacion1 = new Nacion("1");
+                            nacion1.generarNacion(rand.nextInt(5) + 1);
+                            Nacion nacion2 = new Nacion("2");
+                            nacion2.generarNacion(rand.nextInt(5) + 1);
+                            Campo elCampo = new Campo(7);
+                            elCampo.asignarPosiciones(nacion1.getGuerreros());
+                            elCampo.asignarPosiciones(nacion2.getGuerreros());
+                            elCampo.mostrarTablero();
                             break;
                         case "2":
                             break;
@@ -40,7 +48,6 @@ public class Aplicacion {
             }
             System.out.println();
         } while(toContinue);
-        */
     }
     public static void mostrarMenu() {
         System.out.println("The Elemental War");
