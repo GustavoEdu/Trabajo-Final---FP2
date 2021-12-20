@@ -1,9 +1,10 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 //Nota: Tener en cuenta JPanel
 public class Menu extends JFrame {
-    private static final int ANCHO = 625;
+    private static final int ANCHO = 1000;
     private static final int ALTO = 625;
     private JLabel titulo;
     private JButton tipo;
@@ -12,7 +13,7 @@ public class Menu extends JFrame {
     private JButton rapida;
     private JButton normal;
     private JButton avanzada;
-
+    
     public Menu() {
         setTitle("The Elemental War");
         setSize(ANCHO, ALTO);
@@ -66,23 +67,29 @@ public class Menu extends JFrame {
                     rapida.setVisible(false);
                     normal.setVisible(false);
                     avanzada.setVisible(false);
+                    Random rand = new Random();
+                    jugarPartida(rand.nextInt(4) + 10);
                 } else if(e.getActionCommand().equals("Partida Normal")) {
                     System.out.println("Partida Normal");
                 } else {
                     System.out.println("Partida Avanzada");
                 }
             }
+            private JTextArea campo;
+            public void jugarPartida(int cant) {
+                Nacion nacion1 = new Nacion("1");
+                nacion1.generarNacion(cant);
+                Nacion nacion2 = new Nacion("2");
+                nacion2.generarNacion(cant);
+                Campo elCampo = new Campo(cant);
+                elCampo.asignarPosiciones(nacion1.getGuerreros(), Campo.PLAYER_1);
+                elCampo.asignarPosiciones(nacion2.getGuerreros(), Campo.PLAYER_2);
+
+                campo = new JTextArea(elCampo.mostrarTablero());
+                campo.setEditable(false);
+                add(campo);
+            }
         }
-    }
-    public static void jugarPartida(int cant) {
-        Nacion nacion1 = new Nacion("1");
-        nacion1.generarNacion(cant);
-        Nacion nacion2 = new Nacion("2");
-        nacion2.generarNacion(cant);
-        Campo elCampo = new Campo(cant);
-        elCampo.asignarPosiciones(nacion1.getGuerreros(), Campo.PLAYER_1);
-        elCampo.asignarPosiciones(nacion2.getGuerreros(), Campo.PLAYER_2);
-        elCampo.mostrarTablero();
     }
     public static void main(String[] args) {
         new Menu();

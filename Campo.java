@@ -26,41 +26,43 @@ public class Campo {
             }
         }
     }
-    public void mostrarTablero() {
-        System.out.println("Nacion 1: ✠");
-        System.out.println("Nacion 2: ☯");
+    public String mostrarTablero() {
+        String resultado = "";
+        resultado += "Nacion 1: ✠\n";
+        resultado += "Nacion 2: ☯\n";
 
         int counter = 1;
         boolean bandera = true;
         for(int i = 0; i < getExtension(); i++) {
             if(bandera) {
-                System.out.print("\t");
+                resultado += "\t";
                 for(int k = 1; k <= getExtension(); k++) {
-                    System.out.print(k + "\t");
+                    resultado += String.valueOf(k) + "\t";
                 }
-                System.out.println();
+                resultado += "\n";
                 bandera = false;
             }
             for(int j = 0; j < getExtension(); j++) {
                 if(i >= 0 && j == 0) {
-                    System.out.print(counter + "\t");
+                    resultado += String.valueOf(counter) + "\t";
                     counter++;
                 }
                 if(tablero[i][j] != null) {
                     switch(tablero[i][j].getNacion()) {
                         case "1":
-                            System.out.print("✠" + getSymbol(tablero[i][j]) + tablero[i][j].getVida() + "\t");
+                            resultado += "✠" + getSymbol(tablero[i][j]) + tablero[i][j].getVida() + "\t";
                             break;
                         case "2":
-                            System.out.print("☯" + getSymbol(tablero[i][j]) + tablero[i][j].getVida() + "\t");
+                            resultado += "☯" + getSymbol(tablero[i][j]) + tablero[i][j].getVida() + "\t";
                             break;
                     }
                 } else {
-                    System.out.print("|_\t");
+                    resultado += "|_\t";
                 }
             }
-            System.out.println();
+            resultado += "\n";
         }
+        return resultado;
     }
     public void desplazarSoldado(int turno) {
         Scanner sc = new Scanner(System.in);
