@@ -3,6 +3,7 @@ public abstract class Guerrero {
     private String nacion;
     private String name;
     private String tipoGuerrero;
+    private int bando; //Para Mapa
     
     //private int fila;
     //private String columna;
@@ -55,7 +56,9 @@ public abstract class Guerrero {
     public void setTipoGuerrero(String n){
         tipoGuerrero=n;
     }
-    
+    public void setBando(int b) {
+        bando = b;
+    }
     //Métodos get
     /*
     public int getFila(){
@@ -85,6 +88,9 @@ public abstract class Guerrero {
     }
     public String getTipoGuerrero(){
         return tipoGuerrero;
+    }
+    public int getBando() {
+        return bando;
     }
     
     //Métodos
