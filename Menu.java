@@ -19,7 +19,6 @@ public class Menu extends JFrame {
     public Menu() {
         setTitle("The Elemental War");
         setSize(ANCHO, ALTO);
-        setLayout(new FlowLayout());
         setLocationRelativeTo(null); //Centrar la Ventana
         setMinimumSize(new Dimension(325, 375)); //Medidas Mínimas
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,18 +27,49 @@ public class Menu extends JFrame {
     }
 
     public void createContents() {
-        JLabel titulo = new JLabel("The Elemental War");
+        colocarPanelGeneral();
+
+        JPanel contenedorTitulo = new JPanel();
+        contenedorTitulo.setLayout(new BorderLayout());
+        JLabel titulo = new JLabel("The Elemental War", SwingConstants.CENTER);
         Fuentes tipoFuente = new Fuentes();
-        titulo.setFont(tipoFuente.fuente(tipoFuente.GODOFWAR, 0, 40));
+        titulo.setFont(tipoFuente.fuente(tipoFuente.GODOFWAR, 0, 56));
+        contenedorTitulo.add(titulo, BorderLayout.CENTER);
+        contenedorGeneral.add(contenedorTitulo);
+
+        JPanel contenedorOpciones = new JPanel();
+        contenedorOpciones.setLayout(new GridLayout(3, 1, 5, 5));
+        contenedorGeneral.add(contenedorOpciones);
+
         tipoPartida = new JButton("Jugar Partida");
         salir = new JButton("Salir");
+        
+        JPanel contenedorTipo = new JPanel(new GridLayout(1, 3));
+        contenedorTipo.add(new JLabel()); //dummy component
+        contenedorTipo.add(tipoPartida);
+        contenedorTipo.add(new JLabel()); //dummy component
+        contenedorOpciones.add(contenedorTipo);
 
-        add(titulo);
-        add(tipoPartida);
-        add(salir);
+        JPanel contenedorMultijugador = new JPanel(new GridLayout(1, 3));
+        contenedorMultijugador.add(new JLabel()); //dummy component
+        contenedorMultijugador.add(new JButton("Multijugador")); //dummy component
+        contenedorMultijugador.add(new JLabel()); //dummy component
+        contenedorOpciones.add(contenedorMultijugador);
+
+        JPanel contenedorSalir = new JPanel(new GridLayout(1, 3));
+        contenedorSalir.add(new JLabel()); //dummy component
+        contenedorSalir.add(salir);
+        contenedorSalir.add(new JLabel()); //dummy component
+        contenedorOpciones.add(contenedorSalir);
+
         //ListenerForMenu oyenteParaMenu = new ListenerForMenu();
         //tipoPartida.addActionListener(oyenteParaMenu);
         //salir.addActionListener(oyenteParaMenu);
+    }
+    public void colocarPanelGeneral() {
+        contenedorGeneral = new JPanel();
+        contenedorGeneral.setLayout(new GridLayout(2, 1));
+        add(contenedorGeneral);
     }
 
     /*
