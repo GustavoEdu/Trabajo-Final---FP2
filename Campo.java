@@ -1,4 +1,5 @@
 import java.util.*;
+import javax.swing.*;
 public class Campo {
     public static final int PLAYER_1 = 1;
     public static final int PLAYER_2 = 2;
@@ -109,6 +110,54 @@ public class Campo {
                 }
             } else {
                 System.out.println("Te has salido del tablero!");
+            }
+            if(!toContinue) {
+                break;
+            }
+        }
+    }
+     public void desplazarSoldadoVentana(int fil,int col,int fila,int columna,int turno) {
+        Scanner sc = new Scanner(System.in);
+        
+        while(true) {
+
+            boolean toContinue = true;
+            if((fil >= 1 && fil <= tablero.length) && (col >= 1 && col <= tablero[1].length)) {
+                if(tablero[fil - 1][col - 1] != null) {
+                    if(tablero[fil - 1][col - 1].getBando() == turno) {
+                        while(true) {
+                            
+                            if((fila >= 1 && fila <= tablero.length) && (columna >= 1 && columna <= tablero[1].length)) {
+                                if(tablero[fila - 1][columna - 1] == null) { //Sitio Libre
+                                    tablero[fila - 1][columna - 1] = tablero[fil - 1][col - 1];
+                                    tablero[fil - 1][col - 1] = null;
+                                } else if(tablero[fila][columna].getBando() != turno) { //Enfrentamiento!
+                                    
+                                } else { //Entrada inválida
+                                    System.out.println("No hay Guerra Civil!");
+                                    break;
+                                }
+                                break;
+                            } else {
+                                System.out.println("Has querido mandar al Soldado afuera del Tablero!");
+                                break;
+                            }
+                        }
+                        toContinue = false;
+                    } else {
+                        System.out.println("No puedes elegir un soldado del otro equipo");
+                        JOptionPane.showMessageDialog(null, "No puedes elegir un soldado del otro equipo");
+                        break;
+                    }
+                } else {
+                    System.out.println("No hay un soldado hay!");
+                    JOptionPane.showMessageDialog(null, "No hay un soldado hay!");
+                    break;
+                }
+            } else {
+                System.out.println("Te has salido del tablero!");
+                JOptionPane.showMessageDialog(null, "Te has salido del tablero!");
+                break;
             }
             if(!toContinue) {
                 break;
