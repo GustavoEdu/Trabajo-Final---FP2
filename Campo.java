@@ -14,9 +14,18 @@ public class Campo extends JFrame {
     private JPanel contenedorGeneral;
     private JPanel contenedorTablero;
     private JButton botonGanador;
-    private JButton[][] board;
-
+    private JToggleButton[][] board;
+    
+    private int cantidadB = 0;
+    private JToggleButton aux = new JToggleButton();
+    private Guerrero auxGuerrero;
+    //Guardado del Primer Click
+    private int fila;
+    private int columna;
+    private int turno = 1;
+    
     public Campo(int extension) {
+        JOptionPane.showMessageDialog(rootPane, "Nacion 1: ✠\nNacion 2: ☯") ;
         nacion1 = new Nacion("1");
         nacion1.generarNacion(extension);
         nacion2 = new Nacion("2");
@@ -47,9 +56,9 @@ public class Campo extends JFrame {
         contenedorTablero = new JPanel(new GridLayout(getExtension(), getExtension()));
         contenedorGeneral.add(contenedorTablero);
         JPanel contenedorGanador = new JPanel(new GridLayout(3, 3));
-        botonGanador = new JButton("Mostrar Ganador");
+        botonGanador = new JButton("1");
+        botonGanador.setEnabled(false);
         
-        botonGanador.addActionListener(new Listener());
         contenedorGanador.add(new JLabel(" "));
         contenedorGanador.add(new JLabel(" "));
         contenedorGanador.add(new JLabel(" "));
@@ -60,30 +69,156 @@ public class Campo extends JFrame {
         contenedorGanador.add(new JLabel(" "));
         contenedorGeneral.add(contenedorGanador);
     }
-    private class Listener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            String message = "";
-            int cant1, cant2;
-            cant1 = nacion1.getGuerreros().size();
-            cant2 = nacion2.getGuerreros().size();
-            if(cant1 > cant2) {
-                message = "La Nación 1 ha ganado la Partida!";
-            } else if(cant1 < cant2) {
-                message = "La Nación 2 ha ganado la Partida!";
-            } else {
-                message = "¡Empate!";
-            }
-            JOptionPane.showMessageDialog(rootPane, message);
-            setVisible(false);
-            System.exit(0);
-        }
-    }
     private void inicializarTablero(int extension) {
-        board = new JButton[extension][extension];
+        board = new JToggleButton[extension][extension];
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[i].length; j++) {
-                board[i][j] = new JButton();
+                board[i][j] = new JToggleButton();
+                board[i][j].addActionListener(new BoardListener());
                 contenedorTablero.add(board[i][j]);
+            }
+        }
+    }
+    private class BoardListener implements ActionListener {
+        boolean hayCasillaSeleccionada = false;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            boolean toContinue = true;
+            if(!aux.isSelected()) {
+                aux = (JToggleButton) e.getSource();
+            }
+            /*
+            for(int i = 0; i < board.length; i++) {
+                for(int j = 0; j < board[i].length; j++) {
+                    if(board[i][j] == e.getSource()) {
+                        auxGuerrero = tablero[i][j];
+                    }
+                }
+            } 
+            */
+            //JToggleButton tbtn = (JToggleButton) e.getSource();
+            for(int i = 0; i < board.length; i++) {
+                for(int j = 0; j < board[i].length; j++) {
+                    /*
+                    if(e.getSource() == board[i][j] && board[i][j].isSelected() && tablero[i][j] != null && tablero[i][j].getBando() == turno) {
+                        JOptionPane.showMessageDialog(rootPane, "Si es tu turno");
+                    } else {
+                        board[i][j].setSelected(false);
+                        JOptionPane.showMessageDialog(rootPane, "xdxdxdxd");
+                        toContinue = false;
+                    }
+                    */
+                    if(board[i][j] == (JToggleButton)e.getSource() && cantidadB == 0) {
+                        if(tablero[i][j] == null) {
+                            JOptionPane.showMessageDialog(rootPane, "No hay un Guerrero hay!");
+                            board[i][j].setSelected(false);
+                            cantidadB = 0;
+                        } else {
+                            //Hay una casilla seleccionada
+                            cantidadB++;
+                            auxGuerrero = tablero[i][j];
+                            fila = i;
+                            columna = j;
+                            
+                            if(!String.valueOf(auxGuerrero.getBando()).equals(botonGanador.getText())) {
+                                JOptionPane.showMessageDialog(rootPane, "No es tu turno!");
+                                board[i][j].setSelected(false);
+                                cantidadB = 0;
+                            }
+                            
+                            toContinue = false;
+                        }
+                    } else if(board[i][j] == (JToggleButton)e.getSource() && cantidadB == 1 && board[i][j].isSelected() && aux.isSelected()) {
+                        //Hay dos casillas seleccionadas
+                        cantidadB = 0;
+                        
+                        Guerrero guerreroAntes = auxGuerrero;
+                        Guerrero guerreroAhora = tablero[i][j];
+                        
+                        if(guerreroAntes == null) {
+                            board[i][j].setSelected(false);
+                            aux.setSelected(false);
+                        } else {
+                            if(tablero[i][j] != null && tablero[i][j].getBando() != auxGuerrero.getBando()) {
+                                JOptionPane.showMessageDialog(rootPane, "Hay Guerra!");
+                                if(guerreroAhora.getVida() > guerreroAntes.getVida()) {
+                                    JOptionPane.showMessageDialog(rootPane, "Ha ganado el guerrero defensor!");
+                                    tablero[fila][columna] = null;
+                                } else if(guerreroAhora.getVida() < guerreroAntes.getVida()) {
+                                    JOptionPane.showMessageDialog(rootPane, "Ha ganado el guerrero atacante!");
+                                    tablero[i][j] = guerreroAntes;
+                                    tablero[fila][columna] = null;
+                                } else {
+                                    Random rand = new Random();
+                                    JOptionPane.showMessageDialog(rootPane, "Muerte súbita!");
+                                    if(rand.nextInt(2) == 1) {
+                                        JOptionPane.showMessageDialog(rootPane, "Ha ganado el guerrero defensor!");
+                                        tablero[fila][columna] = null;
+                                    } else {
+                                        JOptionPane.showMessageDialog(rootPane, "Ha ganado el guerrero atacante!");
+                                        tablero[i][j] = guerreroAntes;
+                                        tablero[fila][columna] = null;
+                                    }
+                                }
+                                if(botonGanador.getText().equals("1")) {
+                                    botonGanador.setText("2");
+                                } else {
+                                    botonGanador.setText("1");
+                                }
+                                //turno++;
+                            } else if(tablero[i][j] != null && tablero[i][j].getBando() == auxGuerrero.getBando()) {
+                                JOptionPane.showMessageDialog(rootPane, "No puede haber una Guerra Civil!");
+                                //turno++;
+                            } else {
+                                tablero[i][j] = auxGuerrero;
+                                tablero[fila][columna] = null;
+                                //turno++;
+                                if(botonGanador.getText().equals("1")) {
+                                    botonGanador.setText("2");
+                                } else {
+                                    botonGanador.setText("1");
+                                }
+                            }
+                            /*
+                            if(turno == 3) {
+                                turno = 1;
+                            }
+                            */
+                            actualizarBoard();
+                            //Desmarque
+                            board[i][j].setSelected(false);
+                            aux.setSelected(false);
+                        
+                            toContinue = false;
+                        }
+                    }
+                    if(!toContinue) {
+                        break;
+                    }
+                }
+                if(!toContinue) {
+                    break;
+                }
+            }
+            int cantN1 = 0, cantN2 = 0;
+            for(int i = 0; i < tablero.length; i++) {
+                for(int j = 0; j < tablero[i].length; j++) {
+                    if(tablero[i][j] != null) {
+                        if(tablero[i][j].getBando() == 1) {
+                            cantN1++;
+                        } else {
+                            cantN2++;
+                        }   
+                    }
+                }
+            }
+            if(cantN1 == 0 || cantN2 == 0) {
+                if(cantN1 == 0 && cantN2 != 0) {
+                    JOptionPane.showMessageDialog(rootPane, "Ha ganado la Nación 2!");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Ha ganado la Nación1");
+                }
+                System.exit(0);
             }
         }
     }
@@ -106,7 +241,6 @@ public class Campo extends JFrame {
         }
     }
     public void actualizarBoard() {
-        JOptionPane.showMessageDialog(rootPane, "Nacion 1: ✠\nNacion 2: ☯") ;
         String content = "";
         
         for(int i = 0; i < getExtension(); i++) {
