@@ -72,8 +72,7 @@ public class Campo extends JFrame {
     public void actualizarBoard() {
         JOptionPane.showMessageDialog(rootPane, "Nacion 1: ✠\nNacion 2: ☯") ;
         String content = "";
-        //ImageIcon imagen = new ImageIcon("hamster.jpg");
-
+        
         for(int i = 0; i < getExtension(); i++) {
             for(int j = 0; j < getExtension(); j++) {
                 if(tablero[i][j] != null) {
@@ -88,7 +87,6 @@ public class Campo extends JFrame {
                     board[i][j].setText(content);
                 } else {
                     board[i][j].setText("|_");
-                    //board[i][j].setIcon(new ImageIcon(imagen.getImage().getScaledInstance(10, 10, Image.SCALE_SMOOTH)));
                 }
             }
         }
