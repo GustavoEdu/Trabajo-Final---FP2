@@ -2,7 +2,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//import tipografias.Fuentes; //Para las Fuentes
+import tipografias.Fuentes; //Para las Fuentes
 
 public class Menu extends JFrame {
     private static final int ANCHO = 725;
@@ -37,8 +37,8 @@ public class Menu extends JFrame {
         JPanel contenedorTitulo = new JPanel();
         contenedorTitulo.setLayout(new BorderLayout());
         JLabel titulo = new JLabel("The Elemental War", SwingConstants.CENTER);
-        //Fuentes tipoFuente = new Fuentes();
-        //titulo.setFont(tipoFuente.fuente(tipoFuente.GODOFWAR, 0, 56));
+        Fuentes tipoFuente = new Fuentes();
+        titulo.setFont(tipoFuente.fuente(tipoFuente.GODOFWAR, 0, 56));
         contenedorTitulo.add(titulo, BorderLayout.CENTER);
         contenedorGeneral.add(contenedorTitulo);
 
