@@ -15,7 +15,8 @@ public class Nacion {
     
     public void generarNacion(int a){
         Random rand=new Random();
-        for(int i=0;i<a;i++){
+        int cantidad = rand.nextInt(a) + 1;
+        for(int i=0;i<cantidad;i++){
             Guerrero miGuerrero;
             int tipoDeGuerrero=rand.nextInt(4)+1;
             if(tipoDeGuerrero==1){

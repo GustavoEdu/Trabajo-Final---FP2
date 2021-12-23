@@ -6,17 +6,20 @@ public class Campo extends JFrame {
     public static final int PLAYER_1 = 1;
     public static final int PLAYER_2 = 2;
     private Guerrero[][] tablero;
+    private Nacion nacion1, nacion2;
     
     private static final int ANCHO = 975;
     private static final int ALTO = 975;
 
     private JPanel contenedorGeneral;
+    private JPanel contenedorTablero;
+    private JButton botonGanador;
     private JButton[][] board;
 
     public Campo(int extension) {
-        Nacion nacion1 = new Nacion("1");
+        nacion1 = new Nacion("1");
         nacion1.generarNacion(extension);
-        Nacion nacion2 = new Nacion("2");
+        nacion2 = new Nacion("2");
         nacion2.generarNacion(extension);
 
         tablero = new Guerrero[extension][extension]; 
@@ -39,15 +42,48 @@ public class Campo extends JFrame {
         actualizarBoard();
     }
     private void colocarPanelGeneral() {
-        contenedorGeneral = new JPanel(new GridLayout(getExtension(), getExtension()));
-        add(contenedorGeneral);
+        contenedorGeneral = new JPanel(new GridLayout(2, 1));
+        add(contenedorGeneral);        
+        contenedorTablero = new JPanel(new GridLayout(getExtension(), getExtension()));
+        contenedorGeneral.add(contenedorTablero);
+        JPanel contenedorGanador = new JPanel(new GridLayout(3, 3));
+        botonGanador = new JButton("Mostrar Ganador");
+        
+        botonGanador.addActionListener(new Listener());
+        contenedorGanador.add(new JLabel(" "));
+        contenedorGanador.add(new JLabel(" "));
+        contenedorGanador.add(new JLabel(" "));
+        contenedorGanador.add(new JLabel(" "));        
+        contenedorGanador.add(botonGanador);
+        contenedorGanador.add(new JLabel(" "));
+        contenedorGanador.add(new JLabel(" "));
+        contenedorGanador.add(new JLabel(" "));
+        contenedorGeneral.add(contenedorGanador);
+    }
+    private class Listener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String message = "";
+            int cant1, cant2;
+            cant1 = nacion1.getGuerreros().size();
+            cant2 = nacion2.getGuerreros().size();
+            if(cant1 > cant2) {
+                message = "La Nación 1 ha ganado la Partida!";
+            } else if(cant1 < cant2) {
+                message = "La Nación 2 ha ganado la Partida!";
+            } else {
+                message = "¡Empate!";
+            }
+            JOptionPane.showMessageDialog(rootPane, message);
+            setVisible(false);
+            System.exit(0);
+        }
     }
     private void inicializarTablero(int extension) {
         board = new JButton[extension][extension];
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[i].length; j++) {
                 board[i][j] = new JButton();
-                contenedorGeneral.add(board[i][j]);
+                contenedorTablero.add(board[i][j]);
             }
         }
     }
