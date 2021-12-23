@@ -22,7 +22,6 @@ public class Campo extends JFrame {
     //Guardado del Primer Click
     private int fila;
     private int columna;
-    private int turno = 1;
     
     public Campo(int extension) {
         JOptionPane.showMessageDialog(rootPane, "Nacion 1: ✠\nNacion 2: ☯") ;
@@ -87,27 +86,8 @@ public class Campo extends JFrame {
             if(!aux.isSelected()) {
                 aux = (JToggleButton) e.getSource();
             }
-            /*
             for(int i = 0; i < board.length; i++) {
                 for(int j = 0; j < board[i].length; j++) {
-                    if(board[i][j] == e.getSource()) {
-                        auxGuerrero = tablero[i][j];
-                    }
-                }
-            } 
-            */
-            //JToggleButton tbtn = (JToggleButton) e.getSource();
-            for(int i = 0; i < board.length; i++) {
-                for(int j = 0; j < board[i].length; j++) {
-                    /*
-                    if(e.getSource() == board[i][j] && board[i][j].isSelected() && tablero[i][j] != null && tablero[i][j].getBando() == turno) {
-                        JOptionPane.showMessageDialog(rootPane, "Si es tu turno");
-                    } else {
-                        board[i][j].setSelected(false);
-                        JOptionPane.showMessageDialog(rootPane, "xdxdxdxd");
-                        toContinue = false;
-                    }
-                    */
                     if(board[i][j] == (JToggleButton)e.getSource() && cantidadB == 0) {
                         if(tablero[i][j] == null) {
                             JOptionPane.showMessageDialog(rootPane, "No hay un Guerrero hay!");
@@ -179,11 +159,6 @@ public class Campo extends JFrame {
                                     botonGanador.setText("1");
                                 }
                             }
-                            /*
-                            if(turno == 3) {
-                                turno = 1;
-                            }
-                            */
                             actualizarBoard();
                             //Desmarque
                             board[i][j].setSelected(false);
@@ -261,108 +236,6 @@ public class Campo extends JFrame {
             }
         }
     }
-    /*
-    public void desplazarSoldado(int turno) {
-        Scanner sc = new Scanner(System.in);
-        int fil, col, fila, columna;
-        System.out.println("Turno del Jugador " + turno + ":");
-        while(true) {
-            System.out.println("Seleccionando Guerrero:");
-            System.out.print("Fila: ");
-            fil = sc.nextInt();
-            System.out.print("Columna: ");
-            col = sc.nextInt();
-
-            boolean toContinue = true;
-            if((fil >= 1 && fil <= 10) && (col >= 1 && col <= 10)) {
-                if(tablero[fil - 1][col - 1] != null) {
-                    if(tablero[fil - 1][col - 1].getBando() == turno) {
-                        while(true) {
-                            System.out.println("Destino");
-                            System.out.print("Fila: ");
-                            fila = sc.nextInt();
-                            System.out.print("Columna: ");
-                            columna = sc.nextInt();
-
-                            if((fila >= 1 && fila <= 10) && (columna >= 1 && columna <= 10)) {
-                                if(tablero[fila - 1][columna - 1] == null) { //Sitio Libre
-                                    tablero[fila - 1][columna - 1] = tablero[fil - 1][col - 1];
-                                    tablero[fil - 1][col - 1] = null;
-                                } else if(tablero[fila][columna].getBando() != turno) { //Enfrentamiento!
-                                    
-                                } else { //Entrada inválida
-                                    System.out.println("No hay Guerra Civil!");
-                                }
-                                break;
-                            } else {
-                                System.out.println("Has querido mandar al Soldado afuera del Tablero!");
-                            }
-                        }
-                        toContinue = false;
-                    } else {
-                        System.out.println("No puedes elegir un soldado del otro equipo");
-                    }
-                } else {
-                    System.out.println("No hay un soldado hay!");
-                }
-            } else {
-                System.out.println("Te has salido del tablero!");
-            }
-            if(!toContinue) {
-                break;
-            }
-        }
-    }
-    
-    public void desplazarSoldadoVentana(int fil,int col,int fila,int columna,int turno) {
-        Scanner sc = new Scanner(System.in);
-        
-        while(true) {
-
-            boolean toContinue = true;
-            if((fil >= 1 && fil <= tablero.length) && (col >= 1 && col <= tablero[1].length)) {
-                if(tablero[fil - 1][col - 1] != null) {
-                    if(tablero[fil - 1][col - 1].getBando() == turno) {
-                        while(true) {
-                            
-                            if((fila >= 1 && fila <= tablero.length) && (columna >= 1 && columna <= tablero[1].length)) {
-                                if(tablero[fila - 1][columna - 1] == null) { //Sitio Libre
-                                    tablero[fila - 1][columna - 1] = tablero[fil - 1][col - 1];
-                                    tablero[fil - 1][col - 1] = null;
-                                } else if(tablero[fila][columna].getBando() != turno) { //Enfrentamiento!
-                                    
-                                } else { //Entrada inválida
-                                    System.out.println("No hay Guerra Civil!");
-                                    break;
-                                }
-                                break;
-                            } else {
-                                System.out.println("Has querido mandar al Soldado afuera del Tablero!");
-                                break;
-                            }
-                        }
-                        toContinue = false;
-                    } else {
-                        System.out.println("No puedes elegir un soldado del otro equipo");
-                        JOptionPane.showMessageDialog(null, "No puedes elegir un soldado del otro equipo");
-                        break;
-                    }
-                } else {
-                    System.out.println("No hay un soldado hay!");
-                    JOptionPane.showMessageDialog(null, "No hay un soldado hay!");
-                    break;
-                }
-            } else {
-                System.out.println("Te has salido del tablero!");
-                JOptionPane.showMessageDialog(null, "Te has salido del tablero!");
-                break;
-            }
-            if(!toContinue) {
-                break;
-            }
-        }
-    }
-    */
     public static String getSymbol(Guerrero elGuerrero) {
         if(elGuerrero instanceof Agua) {
             return "W";
