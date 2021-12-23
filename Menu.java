@@ -15,7 +15,7 @@ public class Menu extends JFrame {
     private JButton rapida;
     private JButton normal;
     private JButton avanzada;
-    
+
     public Menu() {
         setTitle("The Elemental War");
         setSize(ANCHO, ALTO);
@@ -26,6 +26,11 @@ public class Menu extends JFrame {
         setVisible(true);
     }
 
+    public void colocarPanelGeneral() {
+        contenedorGeneral = new JPanel();
+        contenedorGeneral.setLayout(new GridLayout(2, 1));
+        add(contenedorGeneral);
+    }
     public void createContents() {
         colocarPanelGeneral();
 
@@ -43,33 +48,55 @@ public class Menu extends JFrame {
 
         tipoPartida = new JButton("Jugar Partida");
         salir = new JButton("Salir");
-        
+
         JPanel contenedorTipo = new JPanel(new GridLayout(1, 3));
         contenedorTipo.add(new JLabel()); //dummy component
-        contenedorTipo.add(tipoPartida);
+        JPanel panelTipo = new JPanel(new BorderLayout());
+        panelTipo.add(new JLabel(" "), BorderLayout.NORTH);
+        panelTipo.add(tipoPartida, BorderLayout.CENTER);
+        panelTipo.add(new JLabel(" "), BorderLayout.SOUTH);
+        contenedorTipo.add(panelTipo);
         contenedorTipo.add(new JLabel()); //dummy component
         contenedorOpciones.add(contenedorTipo);
 
         JPanel contenedorMultijugador = new JPanel(new GridLayout(1, 3));
         contenedorMultijugador.add(new JLabel()); //dummy component
-        contenedorMultijugador.add(new JButton("Multijugador")); //dummy component
+        JPanel panelMultijugador = new JPanel(new BorderLayout());
+        panelMultijugador.add(new JLabel(" "), BorderLayout.NORTH);
+        panelMultijugador.add(new JButton("Multijugador"), BorderLayout.CENTER);
+        panelMultijugador.add(new JLabel(" "), BorderLayout.SOUTH);
+        contenedorMultijugador.add(panelMultijugador);
         contenedorMultijugador.add(new JLabel()); //dummy component
         contenedorOpciones.add(contenedorMultijugador);
 
         JPanel contenedorSalir = new JPanel(new GridLayout(1, 3));
         contenedorSalir.add(new JLabel()); //dummy component
-        contenedorSalir.add(salir);
+        JPanel panelSalir = new JPanel(new BorderLayout());
+        panelSalir.add(new JLabel(" "), BorderLayout.NORTH); //dummy component
+        panelSalir.add(salir, BorderLayout.CENTER);
+        panelSalir.add(new JLabel(" "), BorderLayout.SOUTH); //dummy component
+        contenedorSalir.add(panelSalir);
         contenedorSalir.add(new JLabel()); //dummy component
         contenedorOpciones.add(contenedorSalir);
 
-        //ListenerForMenu oyenteParaMenu = new ListenerForMenu();
-        //tipoPartida.addActionListener(oyenteParaMenu);
-        //salir.addActionListener(oyenteParaMenu);
+        TipoListener oyenteParaTipoPartida = new TipoListener();
+        tipoPartida.addActionListener(oyenteParaTipoPartida);
+        SalirListener oyenteParaSalir = new SalirListener();
+        salir.addActionListener(oyenteParaSalir);
     }
-    public void colocarPanelGeneral() {
-        contenedorGeneral = new JPanel();
-        contenedorGeneral.setLayout(new GridLayout(2, 1));
-        add(contenedorGeneral);
+    private class TipoListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new MenuTipo();
+            setVisible(false);
+        }
+    }
+    private class SalirListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(rootPane, "Gracias por Jugar c:!");
+            System.exit(1);
+        }
     }
 
     /*
@@ -79,7 +106,7 @@ public class Menu extends JFrame {
                 //titulo.setVisible(false);
                 //tipo.setVisible(false);
                 salir.setVisible(false);
-                
+
                 rapida = new JButton("Partida Rápida");
                 normal = new JButton("Partida Normal");
                 avanzada = new JButton("Partida Avanzada");
@@ -129,28 +156,28 @@ public class Menu extends JFrame {
                 campo = new JTextArea(elCampo.mostrarTablero());
                 campo.setEditable(false);
                 JScrollPane scroll = new JScrollPane(campo, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-                
-                
-                
+
+
+
                 add(campo);
-                
+
                 JLabel filaI = new JLabel("Fila: ");
                 JLabel columnaI = new JLabel("Columna: ");
                 JLabel posicionI = new JLabel("Posición del Soldado a mover: ");
                 JLabel posicionF = new JLabel("Posición de destino del Soldado: ");
-                
+
                 add(posicionI);
                 add(filaI);
                 add(fil);
                 add(columnaI);
                 add(col);
-                
+
                 add(posicionF);
                 add(filaI);
                 add(fila);
                 add(columnaI);
                 add(columna);
-                
+
                 JButton enviar = new JButton("Mover");
                 enviar.addActionListener(new ListenerForPos());
                 add(enviar);
@@ -158,7 +185,7 @@ public class Menu extends JFrame {
             public class ListenerForPos implements ActionListener {
                 public void actionPerformed(ActionEvent e){
                     if(e.getActionCommand().equals("Mover")){
-                        
+
                         int fila1=Integer.parseInt(fil.getText());
                         int fila2=Integer.parseInt(fila.getText());
                         int colum1=Integer.parseInt(col.getText());
@@ -175,7 +202,7 @@ public class Menu extends JFrame {
                         else if(turno == 2){
                             turno =1;
                         }
-                        
+
                     }
                 }
             }

@@ -57,14 +57,15 @@ public class Aplicacion {
         nacion1.generarNacion(cant);
         Nacion nacion2 = new Nacion("2");
         nacion2.generarNacion(cant);
-        Campo elCampo = new Campo(cant);
-        elCampo.asignarPosiciones(nacion1.getGuerreros(), Campo.PLAYER_1);
-        elCampo.asignarPosiciones(nacion2.getGuerreros(), Campo.PLAYER_2);
-        elCampo.mostrarTablero();
+        
+        //Campo elCampo = new Campo(cant, nacion1, nacion2);
+        //elCampo.mostrarTablero();
+        /*
         elCampo.desplazarSoldado(Campo.PLAYER_1);
         elCampo.mostrarTablero();
         elCampo.desplazarSoldado(Campo.PLAYER_2);
         elCampo.mostrarTablero();
+        */
     }
     public static int getAverage(ArrayList<Guerrero> guerreros) {
         int sum = 0;

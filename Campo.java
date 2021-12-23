@@ -1,14 +1,56 @@
 import java.util.*;
 import javax.swing.*;
-public class Campo {
+import java.awt.*;
+import java.awt.event.*;
+public class Campo extends JFrame {
     public static final int PLAYER_1 = 1;
     public static final int PLAYER_2 = 2;
     private Guerrero[][] tablero;
+    
+    private static final int ANCHO = 975;
+    private static final int ALTO = 975;
+
+    private JPanel contenedorGeneral;
+    private JButton[][] board;
 
     public Campo(int extension) {
-        tablero = new Guerrero[extension][extension];
+        Nacion nacion1 = new Nacion("1");
+        nacion1.generarNacion(extension);
+        Nacion nacion2 = new Nacion("2");
+        nacion2.generarNacion(extension);
+
+        tablero = new Guerrero[extension][extension]; 
+        asignarPosiciones(nacion1.getGuerreros(), Campo.PLAYER_1);
+        asignarPosiciones(nacion2.getGuerreros(), Campo.PLAYER_2);
+
+        createContents();
+
+        setTitle("The Elemental War");
+        setSize(ANCHO, ALTO);
+        setLocationRelativeTo(null); //Centrar la Ventana
+        setMinimumSize(new Dimension(375, 375)); //Medidas Mínimas
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
     }
     
+    private void createContents() {
+        colocarPanelGeneral();       
+        inicializarTablero(getExtension());
+        actualizarBoard();
+    }
+    private void colocarPanelGeneral() {
+        contenedorGeneral = new JPanel(new GridLayout(getExtension(), getExtension()));
+        add(contenedorGeneral);
+    }
+    private void inicializarTablero(int extension) {
+        board = new JButton[extension][extension];
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[i].length; j++) {
+                board[i][j] = new JButton();
+                contenedorGeneral.add(board[i][j]);
+            }
+        }
+    }
     public int getExtension() {
         return tablero.length;
     }
@@ -27,44 +69,31 @@ public class Campo {
             }
         }
     }
-    public String mostrarTablero() {
-        String resultado = "";
-        resultado += "Nacion 1: ✠\n";
-        resultado += "Nacion 2: ☯\n";
+    public void actualizarBoard() {
+        JOptionPane.showMessageDialog(rootPane, "Nacion 1: ✠\nNacion 2: ☯") ;
+        String content = "";
+        //ImageIcon imagen = new ImageIcon("hamster.jpg");
 
-        int counter = 1;
-        boolean bandera = true;
         for(int i = 0; i < getExtension(); i++) {
-            if(bandera) {
-                resultado += "\t";
-                for(int k = 1; k <= getExtension(); k++) {
-                    resultado += String.valueOf(k) + "\t";
-                }
-                resultado += "\n";
-                bandera = false;
-            }
             for(int j = 0; j < getExtension(); j++) {
-                if(i >= 0 && j == 0) {
-                    resultado += String.valueOf(counter) + "\t";
-                    counter++;
-                }
                 if(tablero[i][j] != null) {
                     switch(tablero[i][j].getNacion()) {
                         case "1":
-                            resultado += "✠" + getSymbol(tablero[i][j]) + tablero[i][j].getVida() + "\t";
+                            content = "✠" + getSymbol(tablero[i][j]) + tablero[i][j].getVida();
                             break;
                         case "2":
-                            resultado += "☯" + getSymbol(tablero[i][j]) + tablero[i][j].getVida() + "\t";
+                            content = "☯" + getSymbol(tablero[i][j]) + tablero[i][j].getVida();
                             break;
                     }
+                    board[i][j].setText(content);
                 } else {
-                    resultado += "|_\t";
+                    board[i][j].setText("|_");
+                    //board[i][j].setIcon(new ImageIcon(imagen.getImage().getScaledInstance(10, 10, Image.SCALE_SMOOTH)));
                 }
             }
-            resultado += "\n";
         }
-        return resultado;
     }
+    /*
     public void desplazarSoldado(int turno) {
         Scanner sc = new Scanner(System.in);
         int fil, col, fila, columna;
@@ -116,7 +145,8 @@ public class Campo {
             }
         }
     }
-     public void desplazarSoldadoVentana(int fil,int col,int fila,int columna,int turno) {
+    
+    public void desplazarSoldadoVentana(int fil,int col,int fila,int columna,int turno) {
         Scanner sc = new Scanner(System.in);
         
         while(true) {
@@ -164,6 +194,7 @@ public class Campo {
             }
         }
     }
+    */
     public static String getSymbol(Guerrero elGuerrero) {
         if(elGuerrero instanceof Agua) {
             return "W";
