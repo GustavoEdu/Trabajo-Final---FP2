@@ -2,6 +2,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 public class Campo extends JFrame {
     public static final int PLAYER_1 = 1;
     public static final int PLAYER_2 = 2;

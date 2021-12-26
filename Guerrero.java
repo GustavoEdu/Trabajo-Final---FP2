@@ -92,9 +92,14 @@ public abstract class Guerrero {
     public int getBando() {
         return bando;
     }
-    
+
     //Métodos
     public void verificarDOF(){
         System.out.println("Para ver si un guerrero es más fuerte que otro según su elemento este método sería mejor en el mapa");
+    }
+    public String toString() {
+        return "Nivel Vida: " + getVida() + "\n" +
+                "Nivel Ataque: " + getAtaque() + "\n" + 
+                "Nivel Defensa: " + getDefensa();
     }
 }

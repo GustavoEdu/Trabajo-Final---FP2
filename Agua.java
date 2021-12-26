@@ -1,7 +1,5 @@
 import java.util.*;
 public class Agua extends Guerrero{
-    
-
     public Agua(String n,int ni,int vid,int ata, int def){
         super(n,ni,vid,ata,def);
         setTipoGuerrero("Agua");
