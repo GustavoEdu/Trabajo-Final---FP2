@@ -29,7 +29,7 @@ public class MenuGeneral extends JFrame {
         setVisible(true);
     }
     public void colocarPanelGeneral() {
-        JLabel theLabel = new JLabel(new ImageIcon(getClass().getResource("/menu.jpg")));
+        JLabel theLabel = new JLabel(new ImageIcon(getClass().getResource("/img/background.jpg")));
         setContentPane(theLabel);
         setLayout(new FlowLayout());
         contenedorGeneral = new JPanel();

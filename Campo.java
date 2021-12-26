@@ -232,7 +232,8 @@ public class Campo extends JFrame {
                     }
                     board[i][j].setText(content);
                 } else {
-                    board[i][j].setText("|_");
+                    board[i][j].setOpaque(true);
+                    board[i][j].setBackground(new Color(255, 255, 0));
                 }
             }
         }
