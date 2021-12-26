@@ -2,7 +2,6 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
 public class Campo extends JFrame {
     public static final int PLAYER_1 = 1;
     public static final int PLAYER_2 = 2;
@@ -57,6 +56,9 @@ public class Campo extends JFrame {
         contenedorGeneral.add(contenedorTablero);
         JPanel contenedorGanador = new JPanel(new GridLayout(3, 3));
         botonGanador = new JButton("1");
+        botonGanador.setBackground(Color.RED);
+        botonGanador.setFont(new Font("Cooper Black", Font.PLAIN, 79));
+        botonGanador.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4, false));
         botonGanador.setEnabled(false);
         
         contenedorGanador.add(new JLabel(" "));
@@ -160,6 +162,11 @@ public class Campo extends JFrame {
                                     botonGanador.setText("1");
                                 }
                             }
+                            botonGanador.setOpaque(true);
+                            if(botonGanador.getText().equals("1"))
+                                botonGanador.setBackground(Color.RED);
+                            else
+                                botonGanador.setBackground(Color.GREEN);
                             actualizarBoard();
                             //Desmarque
                             board[i][j].setSelected(false);
@@ -225,15 +232,19 @@ public class Campo extends JFrame {
                     switch(tablero[i][j].getNacion()) {
                         case "1":
                             content = "✠" + getSymbol(tablero[i][j]) + tablero[i][j].getVida();
+                            board[i][j].setOpaque(true);
+                            board[i][j].setBackground(new Color(255, 0, 0));
                             break;
                         case "2":
                             content = "☯" + getSymbol(tablero[i][j]) + tablero[i][j].getVida();
+                            board[i][j].setOpaque(true);
+                            board[i][j].setBackground(new Color(0, 255, 0));
                             break;
                     }
-                    board[i][j].setText(content);
+                    board[i][j].setText("");
                 } else {
                     board[i][j].setOpaque(true);
-                    board[i][j].setBackground(new Color(255, 255, 0));
+                    board[i][j].setBackground(new Color(255, 255, 255));
                 }
             }
         }

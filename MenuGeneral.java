@@ -33,6 +33,7 @@ public class MenuGeneral extends JFrame {
         setContentPane(theLabel);
         setLayout(new FlowLayout());
         contenedorGeneral = new JPanel();
+        contenedorGeneral.setOpaque(false);
         contenedorGeneral.setLayout(new FlowLayout());
         contenedorGeneral.setLayout(new GridLayout(2, 1));
         add(contenedorGeneral);
@@ -41,6 +42,8 @@ public class MenuGeneral extends JFrame {
         colocarPanelGeneral();
 
         JPanel contenedorTitulo = new JPanel();
+        contenedorTitulo.setBackground(new Color(255,255,0));
+        contenedorTitulo.setOpaque(false);
         contenedorTitulo.setLayout(new BorderLayout());
         JLabel titulo = new JLabel("The Elemental War", SwingConstants.CENTER);
         Fuentes tipoFuente = new Fuentes();
@@ -49,6 +52,7 @@ public class MenuGeneral extends JFrame {
         contenedorGeneral.add(contenedorTitulo);
 
         JPanel contenedorOpciones = new JPanel();
+        contenedorOpciones.setOpaque(false);
         contenedorOpciones.setLayout(new GridLayout(3, 1, 5, 5));
         contenedorGeneral.add(contenedorOpciones);
 
@@ -56,8 +60,10 @@ public class MenuGeneral extends JFrame {
         salir = new JButton("Salir");
 
         JPanel contenedorTipo = new JPanel(new GridLayout(1, 3));
+        contenedorTipo.setOpaque(false);
         contenedorTipo.add(new JLabel()); //dummy component
         JPanel panelTipo = new JPanel(new BorderLayout());
+        panelTipo.setOpaque(false);
         panelTipo.add(new JLabel(" "), BorderLayout.NORTH);
         panelTipo.add(tipoPartida, BorderLayout.CENTER);
         panelTipo.add(new JLabel(" "), BorderLayout.SOUTH);
@@ -66,8 +72,10 @@ public class MenuGeneral extends JFrame {
         contenedorOpciones.add(contenedorTipo);
 
         JPanel contenedorMultijugador = new JPanel(new GridLayout(1, 3));
+        contenedorMultijugador.setOpaque(false);
         contenedorMultijugador.add(new JLabel()); //dummy component
         JPanel panelMultijugador = new JPanel(new BorderLayout());
+        panelMultijugador.setOpaque(false);
         panelMultijugador.add(new JLabel(" "), BorderLayout.NORTH);
         
         //ImageIcon ii = new ImageIcon(getClass().getResource("Gagua.gif"));
@@ -83,8 +91,10 @@ public class MenuGeneral extends JFrame {
         contenedorOpciones.add(contenedorMultijugador);
 
         JPanel contenedorSalir = new JPanel(new GridLayout(1, 3));
+        contenedorSalir.setOpaque(false);
         contenedorSalir.add(new JLabel()); //dummy component
         JPanel panelSalir = new JPanel(new BorderLayout());
+        panelSalir.setOpaque(false);
         panelSalir.add(new JLabel(" "), BorderLayout.NORTH); //dummy component
         panelSalir.add(salir, BorderLayout.CENTER);
         panelSalir.add(new JLabel(" "), BorderLayout.SOUTH); //dummy component
